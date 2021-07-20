@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gong.mapper.MenuMapper">
+    <resultMap id="menu" type="MainMenu">
+        <id property="id" column="md"/>
+        <result property="title" column="mt"/>
+        <result property="path" column="mp"/>
+        <collection property="subMenus" ofType="SubMenu">
+            <id property="id" column="sid"/>
+            <result property="title" column="st"/>
+            <result property="path" column="sp"/>
+        </collection>
+    </resultMap>
+    <select id="getMenus" resultMap="menu" resultType="MainMenu">
+        select m.id md,sm.id sid, m.title mt,m.path mp,sm.title st,sm.path sp,sm.mid smd from sportplay.menu m,sportplay.submenu sm where m.id=sm.mid
+    </select>
+</mapper>

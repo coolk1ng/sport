@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gong.mapper.UserMapper">
+    <!--    根据用户名密码查询用户-->
+    <select id="getUser" resultType="User">
+        select *
+        from sportplay.user
+        where username = #{username}
+          and state = 1
+    </select>
+
+    <!--    查询所有用户-->
+    <select id="getAllUser" resultType="map">
+        select * from sportplay.user
+    </select>
+
+<!--    根据用户名查询用户-->
+    <select id="getUserByName" resultType="map">
+        select * from sportplay.user
+        <where>
+        <if test="username!=null">
+            AND username like '%${username}%'
+        </if>
+        </where>
+    </select>
+
+<!--    添加用户-->
+    <insert id="addUser" parameterType="User" >
+        insert into sportplay.user (username,password,email,role,state) values (#{username},#{password},#{email},#{role},#{state})
+    </insert>
+
+    <!--    修改状态信息-->
+    <update id="updateState">
+        update sportplay.user set state=#{state} where id=#{id}
+    </update>
+
+<!--    删除用户-->
+    <delete id="deleteUser" >
+        delete from sportplay.user where id=#{id}
+    </delete>
+
+<!--    根据id查询用户-->
+    <select id="getUserById" resultType="User">
+        select * from sportplay.user where id=#{id}
+    </select>
+
+<!--    修改用户-->
+    <update id="editUser" parameterType="User">
+        update sportplay.user set username=#{username},password=#{password},email=#{email} where id=#{id}
+    </update>
+</mapper>
